@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rodriguez Artistry</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-brand" href="./index.html" aria-current="page">Rodriguez Artistry</a>
+    <nav class="site-links" aria-label="Main navigation">
+      <a href="./about.html">About</a>
+      <a href="./paintings.html">Paintings</a>
+      <a href="./contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="welcome">
+    <figure class="welcome-painting">
+      <div class="welcome-artwork">
+        <button class="open-painting" id="open-painting" type="button"
+                aria-label="Enlarge Mocion Alcatraces" aria-haspopup="dialog">
+          <img src="./images/mocion_alcatraces.jpg"
+               alt="A woman in profile with flowing hair, surrounded by arcs of calla lilies">
+        </button>
+        <h1>Carlos Rodriguez</h1>
+      </div>
+
+      <figcaption class="painting-caption">
+        <cite>Mocion Alcatraces</cite> · Oil on canvas<br>
+        Movement and unity of nature and humanity
+      </figcaption>
+    </figure>
+  </main>
+
+  <dialog class="viewer" id="viewer" aria-label="Mocion Alcatraces painting viewer">
+    <div class="viewer-screen" id="viewer-screen">
+      <div class="viewer-frame">
+        <img src="./images/mocion_alcatraces.jpg"
+             alt="A woman in profile with flowing hair, surrounded by arcs of calla lilies">
+
+        <button class="viewer-control expand" id="fullscreen" type="button"
+                aria-label="Enter full screen" title="Enter full screen">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M14 10l6-6m-5 0h5v5M10 14l-6 6m0-5v5h5"/>
+          </svg>
+        </button>
+
+        <button class="viewer-control close" id="close-viewer" type="button"
+                aria-label="Close painting viewer" title="Close painting viewer"
+                autofocus>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18"/>
+          </svg>
+        </button>
+      </div>
+
+      <p class="viewer-message" id="viewer-message" role="status"></p>
+    </div>
+  </dialog>
+
+  <script>
+    const viewer = document.querySelector("#viewer");
+    const viewerScreen = document.querySelector("#viewer-screen");
+    const openButton = document.querySelector("#open-painting");
+    const closeButton = document.querySelector("#close-viewer");
+    const fullscreenButton = document.querySelector("#fullscreen");
+    const message = document.querySelector("#viewer-message");
+
+    openButton.addEventListener("click", () => {
+      message.textContent = "";
+      viewer.showModal();
+    });
+
+    closeButton.addEventListener("click", () => {
+      viewer.close();
+    });
+
+    fullscreenButton.addEventListener("click", async () => {
+      message.textContent = "";
+
+      try {
+        if (document.fullscreenElement === viewerScreen) {
+          await document.exitFullscreen();
+        } else {
+          await viewerScreen.requestFullscreen();
+        }
+      } catch {
+        message.textContent = "Browser full screen is unavailable.";
+      }
+    });
+
+    document.addEventListener("fullscreenchange", () => {
+      const label = document.fullscreenElement === viewerScreen
+        ? "Exit full screen"
+        : "Enter full screen";
+
+      fullscreenButton.setAttribute("aria-label", label);
+      fullscreenButton.title = label;
+    });
+
+    viewer.addEventListener("close", async () => {
+      if (document.fullscreenElement === viewerScreen) {
+        await document.exitFullscreen().catch(() => {});
+      }
+
+      if (!viewer.open) {
+        openButton.focus({ preventScroll: true });
+      }
+    });
+  </script>
+</body>
+</html>

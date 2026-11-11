@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Paintings | Rodriguez Artistry</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-brand" href="./index.html">Rodriguez Artistry</a>
+    <nav class="site-links" aria-label="Main navigation">
+      <a href="./about.html">About</a>
+      <a href="./paintings.html" aria-current="page">Paintings</a>
+      <a href="./contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="painting-gallery" aria-label="Paintings">
+    <div class="gallery-stage">
+      <button class="gallery-arrow" id="previous-painting" type="button"
+              aria-label="Previous painting">‹</button>
+
+      <button class="open-painting" id="gallery-open" type="button"
+              aria-label="Enlarge painting" aria-haspopup="dialog">
+        <img id="gallery-image" alt="">
+      </button>
+
+      <button class="gallery-arrow" id="next-painting" type="button"
+              aria-label="Next painting">›</button>
+    </div>
+
+    <p class="gallery-caption" aria-live="polite">
+      <cite id="gallery-title"></cite>
+      <span id="gallery-count"></span>
+    </p>
+  </main>
+
+  <dialog class="viewer" id="gallery-viewer" aria-label="Enlarged painting">
+    <div class="viewer-screen" id="gallery-screen">
+      <div class="viewer-frame">
+        <img id="viewer-image" alt="">
+
+        <button class="viewer-control expand" id="gallery-fullscreen"
+                type="button" aria-label="Enter full screen" title="Enter full screen">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M14 10l6-6m-5 0h5v5M10 14l-6 6m0-5v5h5"/>
+          </svg>
+        </button>
+
+        <button class="viewer-control close" id="gallery-close"
+                type="button" aria-label="Close painting" title="Close painting" autofocus>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18"/>
+          </svg>
+        </button>
+      </div>
+      <p class="viewer-message" id="gallery-message" role="status"></p>
+    </div>
+  </dialog>
+
+  <script>
+    const paintings = [
+      {
+        file: "mocion_alcatraces.jpg",
+        title: "Mocion Alcatraces",
+        alt: "A woman in profile with flowing hair, surrounded by arcs of calla lilies"
+      },
+      {
+        file: "light_shadow_spirit.jpg",
+        title: "Light, Shadow, Spirit",
+        alt: "Light, Shadow, Spirit by Carlos Rodriguez"
+      },
+      {
+        file: "Dimensional_breath.jpg",
+        title: "Dimensional_breath",
+        alt: "Dimensional_breath by Carlos Rodriguez"
+      }
+    ];
+
+    const image = document.querySelector("#gallery-image");
+    const title = document.querySelector("#gallery-title");
+    const count = document.querySelector("#gallery-count");
+    const openButton = document.querySelector("#gallery-open");
+    const viewer = document.querySelector("#gallery-viewer");
+    const viewerImage = document.querySelector("#viewer-image");
+    const viewerScreen = document.querySelector("#gallery-screen");
+    const fullscreenButton = document.querySelector("#gallery-fullscreen");
+    const message = document.querySelector("#gallery-message");
+    let currentPainting = 0;
+
+    function showPainting(index) {
+      currentPainting = (index + paintings.length) % paintings.length;
+      const painting = paintings[currentPainting];
+
+      image.src = "./images/" + painting.file;
+      image.alt = painting.alt;
+      title.textContent = painting.title;
+      count.textContent = `${currentPainting + 1} / ${paintings.length}`;
+      openButton.setAttribute("aria-label", `Enlarge ${painting.title}`);
+    }
+
+    document.querySelector("#previous-painting").addEventListener("click", () => {
+      showPainting(currentPainting - 1);
+    });
+
+    document.querySelector("#next-painting").addEventListener("click", () => {
+      showPainting(currentPainting + 1);
+    });
+
+    openButton.addEventListener("click", () => {
+      viewerImage.src = image.src;
+      viewerImage.alt = image.alt;
+      message.textContent = "";
+      viewer.showModal();
+    });
+
+    document.querySelector("#gallery-close").addEventListener("click", () => {
+      viewer.close();
+    });
+
+    fullscreenButton.addEventListener("click", async () => {
+      message.textContent = "";
+
+      try {
+        if (document.fullscreenElement === viewerScreen) {
+          await document.exitFullscreen();
+        } else {
+          await viewerScreen.requestFullscreen();
+        }
+      } catch {
+        message.textContent = "Browser full screen is unavailable.";
+      }
+    });
+
+    document.addEventListener("fullscreenchange", () => {
+      const label = document.fullscreenElement === viewerScreen
+        ? "Exit full screen"
+        : "Enter full screen";
+
+      fullscreenButton.setAttribute("aria-label", label);
+      fullscreenButton.title = label;
+    });
+
+    viewer.addEventListener("close", async () => {
+      if (document.fullscreenElement === viewerScreen) {
+        await document.exitFullscreen().catch(() => {});
+      }
+      openButton.focus({ preventScroll: true });
+    });
+
+    showPainting(0);
+  </script>
+</body>
+</html>
