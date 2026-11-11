@@ -287,3 +287,47 @@ body {
     display: block;
   }
 }
+@media (max-width: 600px) {
+  .site-menu {
+    position: relative;
+    margin-left: auto;
+  }
+
+  .site-menu summary {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .site-menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .menu-icon {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: currentColor;
+    box-shadow: 0 -6px currentColor, 0 6px currentColor;
+  }
+
+  .menu-panel {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    min-width: 150px;
+    background: #f6f2ea;
+    border: 1px solid #d9d1c4;
+    box-shadow: 0 6px 18px #0002;
+  }
+
+  .site-header .menu-panel a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 16px;
+  }
+}
