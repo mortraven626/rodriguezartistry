@@ -274,3 +274,16 @@ body {
   font-size: 0.8rem;
   color: #d4cdc2;
 }
+.site-header .site-menu {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .site-header .site-links {
+    display: none;
+  }
+
+  .site-header .site-menu {
+    display: block;
+  }
+}

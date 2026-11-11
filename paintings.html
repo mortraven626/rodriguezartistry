@@ -8,13 +8,26 @@
 </head>
 <body>
   <header class="site-header">
-    <a class="site-brand" href="./index.html">Rodriguez Artistry</a>
-    <nav class="site-links" aria-label="Main navigation">
+  <a class="site-brand" href="./index.html">Rodriguez Artistry</a>
+
+  <nav class="site-links" aria-label="Main navigation">
+    <a href="./about.html">About</a>
+    <a href="./paintings.html">Paintings</a>
+    <a href="./contact.html">Contact</a>
+  </nav>
+
+  <details class="site-menu">
+    <summary aria-label="Navigation menu">
+      <span class="menu-icon" aria-hidden="true"></span>
+    </summary>
+
+    <nav class="menu-panel" aria-label="Main navigation">
       <a href="./about.html">About</a>
-      <a href="./paintings.html" aria-current="page">Paintings</a>
+      <a href="./paintings.html">Paintings</a>
       <a href="./contact.html">Contact</a>
     </nav>
-  </header>
+  </details>
+</header>
 
   <main class="painting-gallery" aria-label="Paintings">
     <div class="gallery-stage">
@@ -67,6 +80,11 @@
         alt: "A woman in profile with flowing hair, surrounded by arcs of calla lilies"
       },
       {
+        file: "mocion_lanzas.jpg",
+        title: "Mocion_Lanzas",
+        alt: "Mocion_Lanzas by Carlos Rodriguez"
+      },
+      {
         file: "light_shadow_spirit.jpg",
         title: "Light, Shadow, Spirit",
         alt: "Light, Shadow, Spirit by Carlos Rodriguez"
@@ -75,7 +93,44 @@
         file: "Dimensional_breath.jpg",
         title: "Dimensional_breath",
         alt: "Dimensional_breath by Carlos Rodriguez"
-      }
+      },
+      {
+        file: "Ephemeris.jpg",
+        title: "Ephemeris",
+        alt: "Ephemeris by Carlos Rodriguez"
+      },
+      {
+        file: "Frida.jpg",
+        title: "Frida"
+        alt: "Frida by Carlos Rodriguez"
+      },
+      {
+        file: "geishas.jpg",
+        title: "geishas",
+        alt: "Geishas by Carlos Rodriguez"
+      },
+      {
+        file: "greed_lust.jpg",
+        title: "Greed_Lust",
+        alt: "Greed_Lust by Carlos Rodriguez"
+      },
+      {
+        file: "Nixes.jpg",
+        title: "Nixes",
+        alt: "Nixes by Carlos Rodriguez"
+       },
+      {
+        file: "Maria.jpg",
+        title: "Maria",
+        alt: "Maria by Carlos Rodriguez"
+      },
+      {
+        file: "Vanitas.jpg",
+        title: "Vanitas",
+        alt: "Vanitas by Carlos Rodriguez"
+      
+      
+
     ];
 
     const image = document.querySelector("#gallery-image");
